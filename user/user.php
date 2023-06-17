@@ -20,18 +20,24 @@ class User {
         $statement = $this->connection->prepare("SELECT * FROM user WHERE email = ?");
         $statement->bind_param("s", $email);
         $statement->execute();
-
+    
         $result = $statement->get_result();
         $user = $result->fetch_assoc();
-
+    
         if (!$user || !password_verify($password, $user['password'])) {
             return false;
         }
-
-        $_SESSION['user'] = $user;
+       
+        session_start();
+        $_SESSION['user'] = array(
+            'email' => $user['email'],
+            // other user information you want to store
+        ); // Store the entire user data in the session
+        session_write_close();
         
         return true;
     }
+    
     
     public function getUser($userId) {
         $statement = $this->connection->prepare("SELECT * FROM user WHERE id = ?");

@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="category-form category-form-3 pt-50">
                         <div class="form-title text-center">
                             <h3>New Registration</h3>
-                            <span>Sign up now </span>
+                            <span>Login now </span>
                         </div>
                         <div class="main-form">
                         <form action="login.php" method="POST">

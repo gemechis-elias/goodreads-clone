@@ -9,19 +9,18 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
+
 // User is logged in
-//$email = $_SESSION['user']['email'];
+$email = $_SESSION['user']['email'];
 
 // Instantiate the User class and pass the database connection
 $user = new User($connection);
 
 // Get the user's ID by email
 $userId = $user->getUserIdByEmail($email);
+// Get the Current User
+$current_user = $user->getUser($userId);
 
-// Use the user's ID as needed
-// ...
-
-// Continue with the rest of your code for the logged-in user
 ?>
 
 
@@ -39,7 +38,6 @@ $userId = $user->getUserIdByEmail($email);
     <title>Yenibab Maed</title>
     
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/jquery.nice-number.min.css">
@@ -49,8 +47,40 @@ $userId = $user->getUserIdByEmail($email);
     <link rel="stylesheet" href="assets/css/default.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-  
-  
+
+    <style>
+#autocompleteContainer {
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    max-height: 154px;
+    overflow-y: auto;
+    width: 100%; /* Adjust the width as needed */
+    border: 1px solid #ccc;
+    margin-top: -3px; /* Add some margin for spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+   /* Add a slight shadow effect */
+}
+
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #f5f5f5; /* Light gray background color */
+    border-bottom: 1px solid #ccc; /* Bottom border */
+}
+
+.ui-autocomplete-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #3B0000;
+}
+
+.ui-autocomplete-item:last-child {
+    border-bottom: none; /* Remove bottom border for the last item */
+}
+
+
+        </style>
 </head>
 
 <body>
@@ -105,38 +135,21 @@ $userId = $user->getUserIdByEmail($email);
                                     </li>
                                 </ul>
                             </div>
-                        </nav> <!-- nav -->
+                        </nav>  
                     </div>
                     <div class="col-lg-1 col-md-2 col-sm-3 col-3">
                         <div class="right-icon text-right">
                             <ul>
                                 <li><a href="#"><i class="fa fa-cart-plus"></i><span>0</span></a></li>
                             </ul>
-                        </div> <!-- right icon -->
+                        </div>  
                     </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
+                </div>  
+            </div> 
         </div>
     </header>
     
-    <!--====== HEADER PART ENDS ======-->
-   
-    <!--====== SEARCH BOX PART START ======-->
-    
-    <div class="search-box">
-        <div class="serach-form">
-            <div class="closebtn">
-                <span></span>
-                <span></span>
-            </div>
-            <form action="#">
-                <input type="text" placeholder="Search by keyword">
-                <button><i class="fa fa-search"></i></button>
-            </form>
-        </div> <!-- serach form -->
-    </div>
-    
-    <!--====== SEARCH BOX PART ENDS ======-->
+
    
     <!--====== SLIDER PART START ======-->
     
@@ -146,27 +159,31 @@ $userId = $user->getUserIdByEmail($email);
                 <div class="col-lg-10">
                     <div class="slider-cont-3 text-center">
                         <h2>What are you reading?</h2>
-                        <span>ከ 10,000 በላይ መፅሀፍት ለእርስዎ</span>
+                        <span>ከ 10,000 በላይ መፅሀፍት ለእርስዎ <?php echo $userId ?></span>
                         <div class="slider-search mt-45">
-                           <form action="#">
-                                <div class="row no-gutters">
-                                    <div class="col-sm-3">
-                                        <select >
-                                            <option value="0">Category</option>
-                                            <option value="1">Biography</option>
-                                            <option value="2">Religious </option>
-                                            <option value="3">Academic </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" placeholder="Search keyword">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="button" class="main-btn">Search Now</button>
-                                    </div>
-                                </div> <!-- row -->
-                            </form>
-                        </div>
+    <form action="#" id="searchForm">
+        <div class="row no-gutters">
+            <div class="col-sm-3">
+                <select id="categorySelect">
+                    <option value="0">Category</option>
+                    <option value="1">Biography</option>
+                    <option value="2">Religious</option>
+                    <option value="3">Academic</option>
+                </select>
+            </div>
+            <div class="col-sm-6 autocomplete-wrapper">
+                <input type="text" placeholder="Search keyword" id="keywordInput">
+                <div id="autocompleteContainer"></div> <!-- Autocomplete container -->
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="main-btn">Search Now</button>
+            </div>
+        </div> <!-- row -->
+    </form>
+</div>
+
+
+
                     </div> <!-- slider cont3 -->
                 </div>
             </div> <!-- row -->
@@ -495,10 +512,68 @@ $userId = $user->getUserIdByEmail($email);
     
     <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>
-    
-    <!--====== Map js ======-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="assets/js/map-script.js"></script>
+    <script>
+$(document).ready(function() {
+    // Get the category and keyword elements
+    var categorySelect = document.getElementById("categorySelect");
+    var keywordInput = document.getElementById("keywordInput");
+    var autocompleteContainer = document.getElementById("autocompleteContainer");
+
+    // Attach the event listener to the keyword input
+    $(keywordInput).on('keyup', function() {
+        var category = categorySelect.value;
+        var keyword = this.value;
+
+        // Call the searchBooks function with a delay
+        setTimeout(function() {
+            searchBooks(category, keyword);
+        }, 300);
+    });
+
+    // Autocomplete widget
+    $(keywordInput).autocomplete({
+        source: function(request, response) {
+            var category = categorySelect.value;
+            var keyword = request.term;
+
+            $.ajax({
+                url: "search-books.php",
+                dataType: "json",
+                data: { category: category, keyword: keyword },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        minLength: 1,
+        select: function(event, ui) {
+            // Redirect to view-book.php with the selected book ID
+            var bookId = ui.item.value;
+            window.location.href = "view-book.php?id=" + bookId;
+        }
+    });
+});
+
+function searchBooks(category, keyword) {
+    if (keyword.length == 0) {
+        document.getElementById("autocompleteContainer").innerHTML = "";
+        return;
+    }
+
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("autocompleteContainer").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "search-books.php?category=" + category + "&keyword=" + keyword, true);
+    xmlhttp.send();
+}
+
+</script>
+
 
 </body>
 
