@@ -36,7 +36,7 @@ To get started with the project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/gemechis-elias/goodreads-clone.git ```
+   git clone https://github.com/gemechis-elias/goodreads-clone.git
 
 2. Set up a local web server environment (e.g., XAMPP, WAMP, MAMP) and ensure it has PHP support.
 
