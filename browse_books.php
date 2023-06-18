@@ -9,17 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <title>Books List</title>
-    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/jquery.nice-number.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/jquery.nice-number.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/default.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
   
   
 </head>
@@ -37,7 +37,7 @@
                     <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index-4.html">
-                                <img src="images/logo.png" alt="Logo">
+                                <img src="assets/images/logo.png" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
@@ -48,17 +48,17 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a href="index.html">Home</a>
+                                        <a href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="my_book.html">My Books</a>
+                                        <a href="my_book.php">My Books</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a  class="active" href="browse_books.html">Browse</a>
+                                        <a  class="active" href="browse_books.php">Browse</a>
                                         <ul class="sub-menu">
-                                            <li><a href="browse_books.html">Recommendation</a></li>
-                                            <li><a href="browse_books.html">Choice Awards</a></li>
-                                            <li><a href="browse_books.html">News and Interview</a></li>
+                                            <li><a href="browse_books.php">Recommendation</a></li>
+                                            <li><a href="browse_books.php">Choice Awards</a></li>
+                                            <li><a href="browse_books.php">News and Interview</a></li>
                                             <li><a href=" ">Explore </a></li>
 
                                         </ul>
@@ -121,7 +121,7 @@
    
     <!--====== PAGE BANNER PART START ======-->
     
-    <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="6" style="background-image: url(images/page-banner-5.jpg)">
+    <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="6" style="background-image: url(assets/images/page-banner-5.jpg)">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -176,7 +176,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-1.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-1.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -198,7 +198,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-2.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-2.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -220,7 +220,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-3.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-3.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -244,7 +244,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-8.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-8.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -272,7 +272,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-1.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-1.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -303,7 +303,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-2.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-2.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -334,7 +334,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-3.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-3.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -365,7 +365,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-4.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-4.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -427,7 +427,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-1.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-1.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -449,7 +449,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-2.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-2.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -471,7 +471,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-3.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-3.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -493,7 +493,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-4.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-4.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -515,7 +515,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-5.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-5.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -537,7 +537,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-6.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-6.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -559,7 +559,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-7.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-7.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -581,7 +581,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-8">
                             <div class="singel-publication mt-30">
                                 <div class="image">
-                                    <img src="images/publication/p-8.jpg" alt="Publication">
+                                    <img src="assets/images/publication/p-8.jpg" alt="Publication">
                                     <div class="add-cart">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -609,7 +609,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-1.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-1.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -640,7 +640,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-2.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-2.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -671,7 +671,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-3.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-3.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -702,7 +702,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="image">
-                                            <img src="images/publication/p-4.jpg" alt="Publication">
+                                            <img src="assets/images/publication/p-4.jpg" alt="Publication">
                                             <div class="add-cart">
                                                 <ul>
                                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -743,7 +743,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="images/logo-2.png" alt="Logo"></a>
+                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
                             </div>
                             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">

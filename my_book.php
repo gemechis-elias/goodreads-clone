@@ -9,17 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <title>My Books</title>
-    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/jquery.nice-number.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/jquery.nice-number.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/default.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
   
   
 </head>
@@ -37,7 +37,7 @@
                     <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index-4.html">
-                                <img src="images/logo.png" alt="Logo">
+                                <img src="assets/images/logo.png" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
@@ -48,17 +48,17 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a href="index.html">Home</a>
+                                        <a href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="active" href="my_book.html">My Books</a>
+                                        <a class="active" href="my_book.php">My Books</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a   href="browse_books.html">Browse</a>
+                                        <a   href="browse_books.php">Browse</a>
                                         <ul class="sub-menu">
-                                            <li><a href="browse_books.html">Recommendation</a></li>
-                                            <li><a href="browse_books.html">Choice Awards</a></li>
-                                            <li><a href="browse_books.html">News and Interview</a></li>
+                                            <li><a href="browse_books.php">Recommendation</a></li>
+                                            <li><a href="browse_books.php">Choice Awards</a></li>
+                                            <li><a href="browse_books.php">News and Interview</a></li>
                                             <li><a href=" ">Explore </a></li>
 
                                         </ul>
@@ -124,7 +124,7 @@
                 <div class="col-lg-4 col-md-8">
                     <div class="teachers-left mt-50">
                         <div class="hero">
-                            <img src="images/teachers/no_profle.png" alt="Teachers">
+                            <img src="assets/images/teachers/no_profle.png" alt="Teachers">
                         </div>
                         <div class="name">
                             <h6>Gemechis Elias</h6>
@@ -178,7 +178,7 @@
                                             <div class="singel-course mt-30">
                                                 <div class="thum">
                                                     <div class="image">
-                                                        <img src="images/course/cu-2.jpg" alt="Course">
+                                                        <img src="assets/images/course/cu-2.jpg" alt="Course">
                                                     </div>
                                                     <div class="price">
                                                         <span>$10</span>
@@ -196,7 +196,7 @@
                                                     <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
                                                     <div class="course-teacher">
                                                         <div class="thum">
-                                                            <a href="#"><img src="images/course/teacher/t-2.jpg" alt="teacher"></a>
+                                                            <a href="#"><img src="assets/images/course/teacher/t-2.jpg" alt="teacher"></a>
                                                         </div>
                                                         <div class="name">
                                                             <a href="#"><h6>Mark anthem</h6></a>
@@ -215,7 +215,7 @@
                                             <div class="singel-course mt-30">
                                                 <div class="thum">
                                                     <div class="image">
-                                                        <img src="images/course/cu-3.jpg" alt="Course">
+                                                        <img src="assets/images/course/cu-3.jpg" alt="Course">
                                                     </div>
                                                     <div class="price">
                                                         <span>$30</span>
@@ -233,7 +233,7 @@
                                                     <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>
                                                     <div class="course-teacher">
                                                         <div class="thum">
-                                                            <a href="#"><img src="images/course/teacher/t-2.jpg" alt="teacher"></a>
+                                                            <a href="#"><img src="assets/images/course/teacher/t-2.jpg" alt="teacher"></a>
                                                         </div>
                                                         <div class="name">
                                                             <a href="#"><h6>Mark anthem</h6></a>
@@ -261,7 +261,7 @@
                                            <div class="singel-reviews">
                                                 <div class="reviews-author">
                                                     <div class="author-thum">
-                                                        <img src="images/review/r-1.jpg" alt="Reviews">
+                                                        <img src="assets/images/review/r-1.jpg" alt="Reviews">
                                                     </div>
                                                     <div class="author-name">
                                                         <h6>Bobby Aktar</h6>
@@ -287,7 +287,7 @@
                                            <div class="singel-reviews">
                                                 <div class="reviews-author">
                                                     <div class="author-thum">
-                                                        <img src="images/review/r-2.jpg" alt="Reviews">
+                                                        <img src="assets/images/review/r-2.jpg" alt="Reviews">
                                                     </div>
                                                     <div class="author-name">
                                                         <h6>Humayun Ahmed</h6>
@@ -313,7 +313,7 @@
                                            <div class="singel-reviews">
                                                 <div class="reviews-author">
                                                     <div class="author-thum">
-                                                        <img src="images/review/r-3.jpg" alt="Reviews">
+                                                        <img src="assets/images/review/r-3.jpg" alt="Reviews">
                                                     </div>
                                                     <div class="author-name">
                                                         <h6>Tania Aktar</h6>
@@ -399,9 +399,9 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="images/logo-2.png" alt="Logo"></a>
+                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
                             </div>
-                            <p>Gravida nibh vel velit auctor aliquetn quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate.</p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">
                                 <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -419,15 +419,11 @@
                                 <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
                                 <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                                 <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
-                                <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
-                                <li><a href="events.html"><i class="fa fa-angle-right"></i>Event</a></li>
                             </ul>
                             <ul>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Gallery</a></li>
                                 <li><a href="shop.html"><i class="fa fa-angle-right"></i>Shop</a></li>
                                 <li><a href="teachers.html"><i class="fa fa-angle-right"></i>Teachers</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Support</a></li>
-                                <li><a href="contact.html"><i class="fa fa-angle-right"></i>Contact</a></li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
@@ -440,8 +436,6 @@
                                 <li><a href="#"><i class="fa fa-angle-right"></i>FAQS</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Privacy</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Policy</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Support</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i>Documentation</a></li>
                             </ul>
                         </div> <!-- support -->
                     </div>
@@ -456,23 +450,16 @@
                                         <i class="fa fa-home"></i>
                                     </div>
                                     <div class="cont">
-                                        <p>143 castle road 517 district, kiyev port south Canada</p>
+                                        <p>Addis Ababa Science and Technology University</p>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="icon">
-                                        <i class="fa fa-phone"></i>
-                                    </div>
-                                    <div class="cont">
-                                        <p>+3 123 456 789</p>
-                                    </div>
-                                </li>
+                            
                                 <li>
                                     <div class="icon">
                                         <i class="fa fa-envelope-o"></i>
                                     </div>
                                     <div class="cont">
-                                        <p>info@yourmail.com</p>
+                                        <p>Section B, SWE</p>
                                     </div>
                                 </li>
                             </ul>
@@ -482,77 +469,39 @@
             </div> <!-- container -->
         </div> <!-- footer top -->
         
-        <div class="footer-copyright pt-10 pb-25">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="copyright text-md-left text-center pt-15">
-                            <p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a> </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="copyright text-md-right text-center pt-15">
-                           
-                        </div>
-                    </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
-        </div> <!-- footer copyright -->
+ 
     </footer>
-
-    <!--====== FOOTER PART ENDS ======-->
-
-    <!--====== BACK TO TP PART START ======-->
     
+    
+
     <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-    
-    <!--====== BACK TO TP PART ENDS ======-->
-   
-    
-    
-    
-    
-    
-    
-    
-    <!--====== jquery js ======-->
-    <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
 
-    <!--====== Bootstrap js ======-->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+
+    <script src="assets/js/bootstrap.min.js"></script>
     
-    <!--====== Slick js ======-->
-    <script src="js/slick.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
     
-    <!--====== Magnific Popup js ======-->
-    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
     
-    <!--====== Counter Up js ======-->
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/jquery.counterup.min.js"></script>
     
-    <!--====== Nice Select js ======-->
-    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
     
-    <!--====== Nice Number js ======-->
-    <script src="js/jquery.nice-number.min.js"></script>
+    <script src="assets/js/jquery.nice-number.min.js"></script>
     
-    <!--====== Count Down js ======-->
-    <script src="js/jquery.countdown.min.js"></script>
+    <script src="assets/js/jquery.countdown.min.js"></script>
     
-    <!--====== Validator js ======-->
-    <script src="js/validator.min.js"></script>
+    <script src="assets/js/validator.min.js"></script>
     
-    <!--====== Ajax Contact js ======-->
-    <script src="js/ajax-contact.js"></script>
+    <script src="assets/js/ajax-contact.js"></script>
     
-    <!--====== Main js ======-->
-    <script src="js/main.js"></script>
+    <script src="assets/js/main.js"></script>
     
-    <!--====== Map js ======-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="js/map-script.js"></script>
+    <script src="assets/js/map-script.js"></script>
 
 </body>
 

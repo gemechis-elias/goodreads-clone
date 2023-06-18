@@ -1,6 +1,7 @@
 <?php
 require_once 'user/user.php';
 require_once 'connection/connection.php';
+require_once 'books/book.php';
 session_start();
 
 // Check if user is not logged in (session doesn't exist)
@@ -20,7 +21,8 @@ $user = new User($connection);
 $userId = $user->getUserIdByEmail($email);
 // Get the Current User
 $current_user = $user->getUser($userId);
-
+$books = new Book($connection);
+$all_book = $books->getAllBooks();
 ?>
 
 
@@ -102,18 +104,18 @@ $current_user = $user->getUser($userId);
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index.html">Home</a>
+                                        <a class="active" href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="my_book.html">My Books</a>
+                                        <a href="my_book.php">My Books</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="browse_books.html">Browse</a>
+                                        <a href="browse_books.php">Browse</a>
                                         <ul class="sub-menu">
-                                            <li><a href="browse_books.html">Recommendation</a></li>
-                                            <li><a href="browse_books.html">Choice Awards</a></li>
-                                            <li><a href="browse_books.html">News and Interview</a></li>
-                                            <li><a href=" ">Explore </a></li>
+                                            <li><a href="browse_books.php">Recommendation</a></li>
+                                            <li><a href="browse_books.php">Choice Awards</a></li>
+                                            <li><a href="browse_books.php">News and Interview</a></li>
+                                            <li><a href="">Explore </a></li>
 
                                         </ul>
                                     </li>
@@ -149,45 +151,38 @@ $current_user = $user->getUser($userId);
         </div>
     </header>
     
-
-   
-    <!--====== SLIDER PART START ======-->
-    
     <section id="slider-part-3" class="bg_cover"  style="background-image: url(assets/images/slider/s-3.jpg)">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="slider-cont-3 text-center">
                         <h2>What are you reading?</h2>
-                        <span>ከ 10,000 በላይ መፅሀፍት ለእርስዎ <?php echo $userId ?></span>
+                        <span>ከ 10,000 በላይ መፅሀፍት ለእርስዎ</span>
                         <div class="slider-search mt-45">
-    <form action="#" id="searchForm">
-        <div class="row no-gutters">
-            <div class="col-sm-3">
-                <select id="categorySelect">
-                    <option value="0">Category</option>
-                    <option value="1">Biography</option>
-                    <option value="2">Religious</option>
-                    <option value="3">Academic</option>
-                </select>
-            </div>
-            <div class="col-sm-6 autocomplete-wrapper">
-                <input type="text" placeholder="Search keyword" id="keywordInput">
-                <div id="autocompleteContainer"></div> <!-- Autocomplete container -->
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="main-btn">Search Now</button>
-            </div>
-        </div> <!-- row -->
-    </form>
-</div>
-
-
-
-                    </div> <!-- slider cont3 -->
+                        <form action="#" id="searchForm">
+                            <div class="row no-gutters">
+                                <div class="col-sm-3">
+                                    <select id="categorySelect">
+                                        <option value="0">Category</option>
+                                        <option value="1">Biography</option>
+                                        <option value="2">Religious</option>
+                                        <option value="3">Academic</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 autocomplete-wrapper">
+                                    <input type="text" placeholder="Search keyword" id="keywordInput">
+                                    <div id="autocompleteContainer"></div> 
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="main-btn">Search Now</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                    </div> 
                 </div>
-            </div> <!-- row -->
-          </div> <!-- container -->
+            </div> 
+          </div> 
     </section>
     
     
@@ -198,19 +193,33 @@ $current_user = $user->getUser($userId);
                     <div class="section-title pb-60">
                         <h5>For you</h5>
                         <h2>የተመረጡ መፅሀፍት </h2>
-                    </div> <!-- section title -->
+                    </div>  
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-5">
                     <div class="products-btn text-right pb-60">
                         <a href="#" class="main-btn">Browse</a>
-                    </div> <!-- products btn -->
+                    </div>  
                 </div>
-            </div> <!-- row -->
+            </div>  
             <div class="row justify-content-center">
+                <?php
+                $limit = 4; // Limit the number of books to display
+                $counter = 0; // Counter to keep track of the number of displayed books
+                foreach ($all_book as $book) {
+                    // Check if the counter exceeds the limit
+                    if ($counter >= $limit) {
+                        break; // Exit the loop if the limit is reached
+                    }
+
+                    $imagePath = "uploads/" . $book['image']; // Assuming the image path is stored in the 'image' column
+                    $title = $book['title'];
+                    $author = $book['author'];
+                    $price = $book['price'];
+                ?>
                 <div class="col-lg-3 col-md-6 col-sm-8">
                     <div class="singel-publication mt-30">
                         <div class="image">
-                            <img src="assets/images/publication/p-1.jpg" alt="Publication">
+                            <img src="<?php echo $imagePath; ?>" alt="Publication">
                             <div class="add-cart">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
@@ -220,83 +229,22 @@ $current_user = $user->getUser($userId);
                         </div>
                         <div class="cont">
                             <div class="name">
-                                <a href="shop-singel.html"><h6>Set for life </h6></a>
-                                <span>By Scott Trench</span>
+                                <a href="shop-singel.html"><h6><?php echo $title; ?></h6></a>
+                                <span><?php echo $author; ?></span>
                             </div>
                             <div class="button text-right">
-                                <a href="#" class="main-btn">Buy Now ($50)</a>
+                                <a href="#" class="main-btn">Buy Now ($<?php echo $price; ?>)</a>
                             </div>
                         </div>
-                    </div> <!-- singel publication -->
+                    </div>  
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-8">
-                    <div class="singel-publication mt-30">
-                        <div class="image">
-                            <img src="assets/images/publication/p-2.jpg" alt="Publication">
-                            <div class="add-cart">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="cont">
-                            <div class="name">
-                                <a href="shop-singel.html"><h6>A Daughters </h6></a>
-                                <span>By Scott Trench</span>
-                            </div>
-                            <div class="button text-right">
-                                <a href="#" class="main-btn">Buy Now ($30)</a>
-                            </div>
-                        </div>
-                    </div> <!-- singel publication -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-8">
-                    <div class="singel-publication mt-30">
-                        <div class="image">
-                            <img src="assets/images/publication/p-3.jpg" alt="Publication">
-                            <div class="add-cart">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="cont">
-                            <div class="name">
-                                <a href="shop-singel.html"><h6>A Magnet </h6></a>
-                                <span>By Scott Trench</span>
-                            </div>
-                            <div class="button text-right">
-                                <a href="#" class="main-btn">Buy Now ($20)</a>
-                            </div>
-                        </div>
-                    </div> <!-- singel publication -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-8">
-                    <div class="singel-publication mt-30">
-                        <div class="image">
-                            <img src="assets/images/publication/p-4.jpg" alt="Publication">
-                            <div class="add-cart">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="cont">
-                            <div class="name">
-                                <a href="shop-singel.html"><h6>Pices of light</h6></a>
-                                <span>By Scott Trench</span>
-                            </div>
-                            <div class="button text-right">
-                                <a href="#" class="main-btn">Buy Now ($75)</a>
-                            </div>
-                        </div>
-                    </div> <!-- singel publication -->
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
+                <?php
+                    $counter++; // Increment the counter after displaying a book
+                }
+                ?>
+            </div>
+
+        </div> 
     </section>
     
    
