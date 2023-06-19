@@ -31,8 +31,7 @@ class User {
         session_start();
         $_SESSION['user'] = array(
             'email' => $user['email'],
-            // other user information you want to store
-        ); // Store the entire user data in the session
+        ); 
         session_write_close();
         
         return true;
@@ -75,6 +74,53 @@ class User {
         $row = $result->fetch_assoc();
 
         return $row ? $row['id'] : null;
+    }
+    
+    public function addToCart($userId, $bookId) {
+        // Insert the book into the cart table
+        $query = "INSERT INTO cart (user_id, book_id) VALUES ($userId, $bookId)";
+        $this->connection->query($query);
+    }
+
+    public function displayCarts($userId) {
+        // Retrieve the books in the user's cart
+        $query = "SELECT * FROM cart WHERE user_id = $userId";
+        $result = $this->connection->query($query);
+        $carts = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $carts[] = $row;
+        }
+
+        return $carts;
+    }
+
+    public function addToMyBooks($userId, $bookId) {
+        // Insert the book into the mybooks table
+        $query = "INSERT INTO mybooks (user_id, book_id) VALUES ($userId, $bookId)";
+        $this->connection->query($query);
+    }
+
+    public function getMyBooks($userId) {
+        // Retrieve the user's books from the mybooks table
+        $query = "SELECT * FROM mybooks WHERE user_id = $userId";
+        $result = $this->connection->query($query);
+        $myBooks = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $myBooks[] = $row;
+        }
+
+        return $myBooks;
+    }
+    public function getTotalBooksInCart($userId) {
+        // Retrieve the count of books in the user's cart
+        $query = "SELECT COUNT(*) AS total FROM cart WHERE user_id = $userId";
+        $result = $this->connection->query($query);
+        $row = $result->fetch_assoc();
+        $totalBooksInCart = $row['total'];
+
+        return $totalBooksInCart;
     }
 }
 ?>

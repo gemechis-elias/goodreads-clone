@@ -1,3 +1,32 @@
+<?php
+require_once 'user/user.php';
+require_once 'connection/connection.php';
+require_once 'books/book.php';
+session_start();
+
+// Check if user is not logged in (session doesn't exist)
+if (!isset($_SESSION['user'])) {
+    // Redirect to login page
+    header("Location: login.php");
+    exit();
+}
+
+// User is logged in
+$email = $_SESSION['user']['email'];
+
+// Instantiate the User class and pass the database connection
+$user = new User($connection);
+
+// Get the user's ID by email
+$userId = $user->getUserIdByEmail($email);
+// Get the Current User
+$current_user = $user->getUser($userId);
+$books = new Book($connection);
+// Get All Book in Cart
+$totalBooksInCart = $user->getTotalBooksInCart($userId);
+
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,146 +50,71 @@
 
 <body>
     <header id="header-part">
-       
-        <div class="header-top d-none d-lg-block">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="header-contact text-lg-left text-center">
-                            <ul>
-                                <li><img src="assets/images/all-icon/map.png" alt="icon"><span>127/5 Mark street, New york</span></li>
-                                <li><img src="assets/images/all-icon/email.png" alt="icon"><span>info@yourmail.com</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="header-opening-time text-lg-right text-center">
-                            <p>Opening Hours : Monday to Saturay - 8 Am to 5 Pm</p>
-                        </div>
-                    </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
-        </div> <!-- header top -->
-        
-        <div class="header-logo-support pt-30 pb-30">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4">
-                        <div class="logo">
-                            <a href="index-2.html">
-                                <img src="assets/images/logo.png" alt="Logo">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-8">
-                        <div class="support-button float-right d-none d-md-block">
-                            <div class="support float-left">
-                                <div class="icon">
-                                    <img src="assets/images/all-icon/support.png" alt="icon">
-                                </div>
-                                <div class="cont">
-                                    <p>Need Help? call us free</p>
-                                    <span>321 325 5678</span>
-                                </div>
-                            </div>
-                            <div class="button float-left">
-                                <a href="#" class="main-btn">Apply Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
-        </div> <!-- header logo support -->
-        
+ 
         <div class="navigation">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                         <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index-4.html">
+                                <img src="assets/images/logo.png" alt="Logo">
+                            </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-
+       
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul class="navbar-nav mr-auto">
+                            <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index-2.html">Home</a>
+                                        <a  href="index.php">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a  href="my_book.php">My Books</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="browse_books.php">Browse</a>
                                         <ul class="sub-menu">
-                                            <li><a class="active" href="index-2.html">Home 01</a></li>
-                                            <li><a href="index-3.html">Home 02</a></li>
-                                            <li><a href="index-4.html">Home 03</a></li>
+                                            <li><a href="browse_books.php">Recommendation</a></li>
+                                            <li><a href="browse_books.php">Choice Awards</a></li>
+                                            <li><a href="browse_books.php">News and Interview</a></li>
+                                            <li><a href="">Explore </a></li>
+       
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="about.html">About us</a>
+                                        <a href="community.php">Community</a>
+                                       
                                     </li>
+                                   
                                     <li class="nav-item">
-                                        <a href="courses.html">Courses</a>
+                                        <a  href="cart.php">Cart</a>
                                         <ul class="sub-menu">
-                                            <li><a href="courses.html">Courses</a></li>
-                                            <li><a href="courses-singel.html">Course Singel</a></li>
+                                            <li><a href="cart.php">My Cart</a></li>
+                                            <li><a href="about.php">Wish List</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="events.html">Events</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="events.html">Events</a></li>
-                                            <li><a href="events-singel.html">Event Singel</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="teachers.html">Our teachers</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="teachers.html">teachers</a></li>
-                                            <li><a href="teachers-singel.html">teacher Singel</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="blog.html">Blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="blog-singel.html">Blog Singel</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="shop.html">Shop</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="shop-singel.html">Shop Singel</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="contact.html">Contact</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                            <li><a href="contact-2.html">Contact Us 2</a></li>
-                                        </ul>
+                                        <a class="active" href="logout.php">Contact</a>
                                     </li>
                                 </ul>
-                            </div>
-                        </nav> <!-- nav -->
+                             </div>
+                        </nav>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-4">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-3">
                         <div class="right-icon text-right">
                             <ul>
-                                <li><a href="#" id="search"><i class="fa fa-search"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-bag"></i><span>0</span></a></li>
+                                <li><a href="#"><i class="fa fa-cart-plus"></i><span><?php echo $totalBooksInCart?></span></a></li>
                             </ul>
-                        </div> <!-- right icon -->
+                        </div>  
                     </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
+                </div>  
+            </div>  
         </div>
-        
-    </header>
-    
-    <!--====== HEADER PART ENDS ======-->
-   
-    <!--====== SEARCH BOX PART START ======-->
-    
-    <div class="search-box">
+       </header>
+       
+       <div class="search-box">
         <div class="serach-form">
             <div class="closebtn">
                 <span></span>
@@ -170,13 +124,8 @@
                 <input type="text" placeholder="Search by keyword">
                 <button><i class="fa fa-search"></i></button>
             </form>
-        </div> <!-- serach form -->
-    </div>
-    
-    <!--====== SEARCH BOX PART ENDS ======-->
-   
-    <!--====== PAGE BANNER PART START ======-->
-    
+        </div>  
+       </div>
     <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url(assets/images/page-banner-6.jpg)">
         <div class="container">
             <div class="row">

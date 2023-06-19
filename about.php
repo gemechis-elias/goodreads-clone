@@ -75,10 +75,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
 </head>
 
 <body>
-
-    
     <header id="header-part">
- 
         <div class="navigation">
             <div class="container">
                 <div class="row">
@@ -94,54 +91,59 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             </button>
 
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                            <ul class="navbar-nav ml-auto">
+                                <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a  href="index.php">Home</a>
+                                        <a href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="active" href="my_book.php">My Books</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="browse_books.php">Browse</a>
+                                        <a   href="browse_books.php">Browse</a>
                                         <ul class="sub-menu">
                                             <li><a href="browse_books.php">Recommendation</a></li>
                                             <li><a href="browse_books.php">Choice Awards</a></li>
                                             <li><a href="browse_books.php">News and Interview</a></li>
-                                            <li><a href="">Explore </a></li>
+                                            <li><a href=" ">Explore </a></li>
 
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="community.php">Community</a>
+                                        <a href="community.html">Community</a>
                                        
                                     </li>
                                    
                                     <li class="nav-item">
-                                        <a href="cart.php">Cart</a>
+                                        <a href="shop.html">Cart</a>
                                         <ul class="sub-menu">
-                                            <li><a href="cart.php">My Cart</a></li>
-                                            <li><a href="about.php">Wish List</a></li>
+                                            <li><a href="shop.html">Shop</a></li>
+                                            <li><a href="shop-singel.html">Shop Singel</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="logout.php">Logout</a>
+                                        <a href="contact.html">Group</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="contact.html">Contact Us</a></li>
+                                            <li><a href="contact-2.html">Contact Us 2</a></li>
+                                        </ul>
                                     </li>
                                 </ul>
-                             </div>
+                            </div>
                         </nav>
                     </div>
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-3">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-4">
                         <div class="right-icon text-right">
                             <ul>
-                                <li><a href="#"><i class="fa fa-cart-plus"></i><span><?php echo $totalBooksInCart?></span></a></li>
+                                <li><a href="#" id="search"><i class="fa fa-search"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-bag"></i><span>0</span></a></li>
                             </ul>
-                        </div>  
+                        </div> 
                     </div>
-                </div>  
-            </div>  
+                </div> 
+            </div> 
         </div>
+        
     </header>
-    
     <div class="search-box">
         <div class="serach-form">
             <div class="closebtn">
@@ -152,7 +154,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                 <input type="text" placeholder="Search by keyword">
                 <button><i class="fa fa-search"></i></button>
             </form>
-        </div> <!-- serach form -->
+        </div> 
     </div>
 
     
@@ -177,7 +179,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             </ul>
                         </div>
                       
-                    </div> <!-- teachers left -->
+                    </div> 
                 </div>
                 <div class="col-lg-8">
                     <div class="teachers-right mt-50">
@@ -189,23 +191,23 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             <li class="nav-item">
                                 <a id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">My Books</a>
                             </li>
-                        </ul> <!-- nav -->
+                        </ul>  
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                 <div class="dashboard-cont">
                                     <div class="singel-dashboard pt-40">
                                         <h5>About</h5>
                                         <p><?php echo $current_user['about']; ?></p>
-                                    </div> <!-- singel dashboard -->
+                                    </div>  
                                     <div class="singel-dashboard pt-40">
                                         <h5>GEMECHIS’S QUOTES</h5>
                                         <p><?php echo $current_user['qoutes']; ?></p>
-                                    </div> <!-- singel dashboard -->
+                                    </div>  
                                     <div class="singel-dashboard pt-40">
                                         <h5>FAVORITE GENRES</h5>
                                         <p>Christian<br>Novel<br>Science</p>
-                                    </div> <!-- singel dashboard -->
-                                </div> <!-- dashboard cont -->
+                                    </div>  
+                                </div>  
                             </div>
                       
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
@@ -242,7 +244,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                                     <p><?php echo $description; ?></p>
                                               
                                                 </div>
-                                            </div>  
+                                            </div> 
                                       
                                             <?php
                                                 }
@@ -257,8 +259,6 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
             </div>  
         </div>  
     </section>
-
-
     <footer id="footer-part">
         <div class="footer-top pt-40 pb-70">
             <div class="container">
@@ -330,46 +330,31 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     </div>
                                 </li>
                             </ul>
-                        </div> <!-- footer address -->
+                        </div>
                     </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
-        </div> <!-- footer top -->
+                </div> 
+            </div> 
+        </div> 
         
  
     </footer>
-    
-    
 
     <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-
     <script src="assets/js/bootstrap.min.js"></script>
-    
     <script src="assets/js/slick.min.js"></script>
-    
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
-    
     <script src="assets/js/jquery.nice-select.min.js"></script>
-    
     <script src="assets/js/jquery.nice-number.min.js"></script>
-    
     <script src="assets/js/jquery.countdown.min.js"></script>
-    
     <script src="assets/js/validator.min.js"></script>
-    
     <script src="assets/js/ajax-contact.js"></script>
-    
     <script src="assets/js/main.js"></script>
-    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
     <script src="assets/js/map-script.js"></script>
 
 </body>
-
 </html>

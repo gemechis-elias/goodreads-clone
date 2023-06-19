@@ -23,8 +23,30 @@ $userId = $user->getUserIdByEmail($email);
 $current_user = $user->getUser($userId);
 $books = new Book($connection);
 $all_book = $books->getAllBooks();
-?>
 
+// Check if the shopping-cart or heart-o buttons are clicked
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    $bookId = $_GET['book_id'];
+
+    // Perform the corresponding action based on the button clicked
+    switch ($action) {
+        case 'add_to_cart':
+            $user->addToCart($userId, $bookId);
+            // refresh the page
+            header("Location: index.php");
+            break;
+        case 'add_to_my_books':
+            $user->addToMyBooks($userId, $bookId);
+            header("Location: index.php");
+            break;
+    }
+}
+
+// Get All Book in Cart
+$totalBooksInCart = $user->getTotalBooksInCart($userId);
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -93,7 +115,6 @@ $all_book = $books->getAllBooks();
                     <div class="col-lg-11 col-md-10 col-sm-9 col-9">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index-4.html">
-                                <img src="assets/images/logo-2.png" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
@@ -120,20 +141,19 @@ $all_book = $books->getAllBooks();
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="community.html">Community</a>
+                                        <a href="community.php">Community</a>
                                        
                                     </li>
                                    
                                     <li class="nav-item">
-                                        <a href="shop.html">Cart</a>
+                                        <a href="cart.php">Cart</a>
                                         <ul class="sub-menu">
-                                            <li><a href="shop.html">My Cart</a></li>
-                                            <li><a href="shop-singel.html">Wish List</a></li>
+                                            <li><a href="cart.php">My Cart</a></li>
+                                            <li><a href="about.php">Wish List</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
                                         <a href="logout.php">Logout</a>
-                                       
                                     </li>
                                 </ul>
                             </div>
@@ -142,7 +162,7 @@ $all_book = $books->getAllBooks();
                     <div class="col-lg-1 col-md-2 col-sm-3 col-3">
                         <div class="right-icon text-right">
                             <ul>
-                                <li><a href="#"><i class="fa fa-cart-plus"></i><span>0</span></a></li>
+                                <li><a href="#"><i class="fa fa-cart-plus"></i><span><?php echo $totalBooksInCart?></span></a></li>
                             </ul>
                         </div>  
                     </div>
@@ -215,6 +235,7 @@ $all_book = $books->getAllBooks();
                     $title = $book['title'];
                     $author = $book['author'];
                     $price = $book['price'];
+                    $bookId = $book['id'];
                 ?>
                 <div class="col-lg-3 col-md-6 col-sm-8">
                     <div class="singel-publication mt-30">
@@ -222,8 +243,8 @@ $all_book = $books->getAllBooks();
                             <img src="<?php echo $imagePath; ?>" alt="Publication">
                             <div class="add-cart">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="?action=add_to_cart&book_id=<?php echo $bookId; ?>"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="?action=add_to_my_books&book_id=<?php echo $bookId; ?>"><i class="fa fa-heart-o"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -243,7 +264,6 @@ $all_book = $books->getAllBooks();
                 }
                 ?>
             </div>
-
         </div> 
     </section>
     
@@ -332,11 +352,11 @@ $all_book = $books->getAllBooks();
                                     <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons  vel.</p>
                                 </div>
                             </div>
-                        </div> <!-- row -->
-                    </div> <!-- singel news -->
+                        </div> 
+                    </div>  
                 </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
+            </div>  
+        </div>  
     </section>
     
  
@@ -421,44 +441,18 @@ $all_book = $books->getAllBooks();
  
     </footer>
     
-    
-    
-    
-    
-    
-    <!--====== jquery js ======-->
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-
-    <!--====== Bootstrap js ======-->
     <script src="assets/js/bootstrap.min.js"></script>
-    
-    <!--====== Slick js ======-->
     <script src="assets/js/slick.min.js"></script>
-    
-    <!--====== Magnific Popup js ======-->
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    
-    <!--====== Counter Up js ======-->
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
-    
-    <!--====== Nice Select js ======-->
     <script src="assets/js/jquery.nice-select.min.js"></script>
-    
-    <!--====== Nice Number js ======-->
     <script src="assets/js/jquery.nice-number.min.js"></script>
-    
-    <!--====== Count Down js ======-->
     <script src="assets/js/jquery.countdown.min.js"></script>
-    
-    <!--====== Validator js ======-->
     <script src="assets/js/validator.min.js"></script>
-    
-    <!--====== Ajax Contact js ======-->
     <script src="assets/js/ajax-contact.js"></script>
-    
-    <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>
     <script>
 $(document).ready(function() {

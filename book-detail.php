@@ -1,4 +1,32 @@
-<!doctype html>
+<?php
+require_once 'user/user.php';
+require_once 'connection/connection.php';
+require_once 'books/book.php';
+session_start();
+
+// Check if user is not logged in (session doesn't exist)
+if (!isset($_SESSION['user'])) {
+    // Redirect to login page
+    header("Location: login.php");
+    exit();
+}
+
+// User is logged in
+$email = $_SESSION['user']['email'];
+
+// Instantiate the User class and pass the database connection
+$user = new User($connection);
+
+// Get the user's ID by email
+$userId = $user->getUserIdByEmail($email);
+// Get the Current User
+$current_user = $user->getUser($userId);
+$books = new Book($connection);
+// Get All Book in Cart
+$totalBooksInCart = $user->getTotalBooksInCart($userId);
+
+
+?><!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -23,84 +51,83 @@
 </head>
 
 <body>
-    <header id="header-part">        
-        <div class="navigation navigation-2 navigation-3">
-            <div class="container">
-                <div class="row no-gutters">
-                    <div class="col-lg-11 col-md-10 col-sm-9 col-9">
-                        <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index-4.html">
-                                <img src="assets/images/logo-2.png" alt="Logo">
-                            </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
+<header id="header-part">
+ 
+ <div class="navigation">
+     <div class="container">
+         <div class="row">
+             <div class="col-lg-10 col-md-10 col-sm-9 col-8">
+                 <nav class="navbar navbar-expand-lg">
+                     <a class="navbar-brand" href="index-4.html">
+                         <img src="assets/images/logo.png" alt="Logo">
+                     </a>
+                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>
 
-                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a class="active" href="index.php">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="my_book.php">My Books</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="browse_books.php">Browse</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="browse_books.php">Recommendation</a></li>
-                                            <li><a href="browse_books.php">Choice Awards</a></li>
-                                            <li><a href="browse_books.php">News and Interview</a></li>
-                                            <li><a href="">Explore </a></li>
+                     <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                     <ul class="navbar-nav ml-auto">
+                             <li class="nav-item">
+                                 <a  href="index.php">Home</a>
+                             </li>
+                             <li class="nav-item">
+                                 <a class="active" href="my_book.php">My Books</a>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="browse_books.php">Browse</a>
+                                 <ul class="sub-menu">
+                                     <li><a href="browse_books.php">Recommendation</a></li>
+                                     <li><a href="browse_books.php">Choice Awards</a></li>
+                                     <li><a href="browse_books.php">News and Interview</a></li>
+                                     <li><a href="">Explore </a></li>
 
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="community.html">Community</a>
-                                       
-                                    </li>
-                                   
-                                    <li class="nav-item">
-                                        <a href="shop.html">Cart</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="shop.html">My Cart</a></li>
-                                            <li><a href="shop-singel.html">Wish List</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="logout.php">Logout</a>
-                                       
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>  
-                    </div>
-                    <div class="col-lg-1 col-md-2 col-sm-3 col-3">
-                        <div class="right-icon text-right">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-cart-plus"></i><span>0</span></a></li>
-                            </ul>
-                        </div>  
-                    </div>
-                </div>  
-            </div> 
-        </div>
-    </header>
-    
-    
-    <div class="search-box">
-        <div class="serach-form">
-            <div class="closebtn">
-                <span></span>
-                <span></span>
-            </div>
-            <form action="#">
-                <input type="text" placeholder="Search by keyword">
-                <button><i class="fa fa-search"></i></button>
-            </form>
-        </div> <!-- serach form -->
-    </div>
+                                 </ul>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="community.php">Community</a>
+                                
+                             </li>
+                            
+                             <li class="nav-item">
+                                 <a href="cart.php">Cart</a>
+                                 <ul class="sub-menu">
+                                     <li><a href="cart.php">My Cart</a></li>
+                                     <li><a href="about.php">Wish List</a></li>
+                                 </ul>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="logout.php">Logout</a>
+                             </li>
+                         </ul>
+                      </div>
+                 </nav>
+             </div>
+             <div class="col-lg-1 col-md-2 col-sm-3 col-3">
+                 <div class="right-icon text-right">
+                     <ul>
+                         <li><a href="#"><i class="fa fa-cart-plus"></i><span><?php echo $totalBooksInCart?></span></a></li>
+                     </ul>
+                 </div>  
+             </div>
+         </div>  
+     </div>  
+ </div>
+</header>
+
+<div class="search-box">
+ <div class="serach-form">
+     <div class="closebtn">
+         <span></span>
+         <span></span>
+     </div>
+     <form action="#">
+         <input type="text" placeholder="Search by keyword">
+         <button><i class="fa fa-search"></i></button>
+     </form>
+ </div> <!-- serach form -->
+</div>
     
     <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url(assets/images/page-banner-4.jpg)">
         <div class="container">
