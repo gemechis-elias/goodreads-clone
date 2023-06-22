@@ -208,7 +208,7 @@ if (isset($_POST['post_comment'])) {
 
                                             foreach ($comments as $comment) {
                                                 $authorName = $comment['name'];
-                                                $profilePic = "uploads/".$comment['profile_pic'];
+                                                $profilePic = "uploads/profile/".$comment['profile_pic'];
                                                 $commentText = $comment['comment'];
                                             ?>
                                             <li>
@@ -265,12 +265,10 @@ if (isset($_POST['post_comment'])) {
                                     <li>
                                         <a href="#">
                                             <div class="singel-post">
-                                                <div class="thum">
-                                                    <img src="assets/images/blog/blog-post/bp-1.jpg" alt="Blog">
-                                                </div>
+                                                
                                                 <div class="cont">
                                                     <h6>Introduction to languages</h6>
-                                                    <span>20 Dec 2018</span>
+                                                    <span>20 Dec 2013</span>
                                                 </div>
                                             </div>  
                                         </a>
@@ -278,12 +276,10 @@ if (isset($_POST['post_comment'])) {
                                     <li>
                                         <a href="#">
                                             <div class="singel-post">
-                                                <div class="thum">
-                                                    <img src="assets/images/blog/blog-post/bp-2.jpg" alt="Blog">
-                                                </div>
+                                               
                                                 <div class="cont">
                                                     <h6>How to build a game with java</h6>
-                                                    <span>10 Dec 2018</span>
+                                                    <span>10 Dec 2013</span>
                                                 </div>
                                             </div>  
                                         </a>
@@ -291,12 +287,10 @@ if (isset($_POST['post_comment'])) {
                                     <li>
                                         <a href="#">
                                             <div class="singel-post">
-                                                <div class="thum">
-                                                    <img src="assets/images/blog/blog-post/bp-1.jpg" alt="Blog">
-                                                </div>
+                                                
                                                 <div class="cont">
                                                     <h6>Basic accounting from primary</h6>
-                                                    <span>07 Dec 2018</span>
+                                                    <span>07 Dec 2013</span>
                                                 </div>
                                             </div>  
                                         </a>

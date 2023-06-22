@@ -193,7 +193,7 @@ if (isset($_POST['post_comment'])) {
 
                                             foreach ($comments as $comment) {
                                                 $authorName = $comment['name'];
-                                                $profilePic = "uploads/".$comment['profile_pic'];
+                                                $profilePic = "uploads/profile/".$comment['profile_pic'];
                                                 $commentText = $comment['comment'];
                                             ?>
                                             <li>
