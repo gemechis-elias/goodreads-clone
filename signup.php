@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input data
 
     $user = new User($connection);
-    $result = $user->signup($name, $email, $password, null);
+    $result = $user->signup($name, $email, $password, "no_profle.png");
 
     if ($result) {
         echo "<script>alert('User created successfully!');</script>";

@@ -198,6 +198,11 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                            <button class="btn btn-primary" type="button" onclick="window.location.href='book-detail.php?action=add_to_cart&book_id=<?php echo $bookId; ?>'">Add to Cart</button>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#">
+                                           <button class="btn btn-primary" type="button" onclick="">Buy this Book</button>
+                                        </a>
+                                    </li>
                                    </ul>
                             </div>  
                         </div>

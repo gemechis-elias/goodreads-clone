@@ -490,7 +490,7 @@ $(document).ready(function() {
         select: function(event, ui) {
             // Redirect to view-book.php with the selected book ID
             var bookId = ui.item.value;
-            window.location.href = "view-book.php?id=" + bookId;
+            window.location.href = "book-detail.php?id=" + bookId;
         }
     });
 });
