@@ -30,14 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 
 <head>
-
-    <!--====== Required meta tags ======-->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!--====== Title ======-->
     <title>Sign Up - Yenibab Mead</title>
     <link rel="shortcut icon" href="images/favicon.png" type="image/png">
     <link rel="stylesheet" href="assets/css/slick.css">
@@ -75,12 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-lg-6">
                     <div class="count-down-cont pt-50">
                         <h3>Welcome Back</h3>
-                        <h2>እንኳን ወደ የንባብ ማዕድ በደህና መጡ!</h2>
+                        <h2>እንኳን ወደ ጥሩ ንባብ ገፅ በደህና መጡ!</h2>
                     </div>
                     <div class="developer-credit">
                         Developed by <span>Gemechis Elias</span>, <span>Habteyesus Tadese</span>, <span>Etsub Hayelom</span>, <span>Duresa Fayisa</span> and <span>Fikre</span>.
                     </div>
-                    <!-- count down cont -->
                 </div>
                 <div class="col-lg-5 offset-lg-1 col-md-8">
                     <div class="category-form category-form-3 pt-50">
@@ -105,59 +100,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </form>
 
                         <p style="margin-top: 10px;">Already registred? <a href="login.php" style="color: blue;">Login Here</a></p>
- </div>
+                         </div>
                     </div>
-                    <!-- category form -->
                 </div>
             </div>
-            <!-- row -->
         </div>
-        <!-- container -->
     </section>
 
-
-
-
-
-
-    <!--====== jquery js ======-->
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-
-    <!--====== Bootstrap js ======-->
     <script src="assets/js/bootstrap.min.js"></script>
-
-    <!--====== Slick js ======-->
     <script src="assets/js/slick.min.js"></script>
-
-    <!--====== Magnific Popup js ======-->
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
-
-    <!--====== Counter Up js ======-->
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
-
-    <!--====== Nice Select js ======-->
     <script src="assets/js/jquery.nice-select.min.js"></script>
-
-    <!--====== Nice Number js ======-->
     <script src="assets/js/jquery.nice-number.min.js"></script>
-
-    <!--====== Count Down js ======-->
     <script src="assets/js/jquery.countdown.min.js"></script>
-
-    <!--====== Validator js ======-->
     <script src="assets/js/validator.min.js"></script>
-
-    <!--====== Ajax Contact js ======-->
     <script src="assets/js/ajax-contact.js"></script>
-
-    <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>
-
-    <!--====== Map js ======-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="assets/js/map-script.js"></script>
 
 </body>
 

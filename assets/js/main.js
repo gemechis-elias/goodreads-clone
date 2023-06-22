@@ -35,10 +35,10 @@ $(function() {
         var scroll = $(window).scrollTop();
         if (scroll < 245) {
             $(".navigation").removeClass("sticky");
-            $(".navigation-3 img").attr("src", "images/logo-2.png");
+            $(".navigation-3 img").attr("src", "assets/images/logo.png");
         } else{
             $(".navigation").addClass("sticky");
-            $(".navigation-3 img").attr("src", "images/logo.png");
+            $(".navigation-3 img").attr("src", "assets/images/logo-2.png");
         }
     });
     

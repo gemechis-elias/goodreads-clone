@@ -1,7 +1,10 @@
 <?php
 require_once 'user/user.php';
 require_once 'connection/connection.php';
-require_once 'books/book.php';
+require_once 'books/book.php'; 
+require_once 'posts/post.php';
+
+
 session_start();
 
 // Check if user is not logged in (session doesn't exist)
@@ -45,6 +48,12 @@ if (isset($_GET['action'])) {
 
 // Get All Book in Cart
 $totalBooksInCart = $user->getTotalBooksInCart($userId);
+// Create an instance of the Post class with the database connection
+$post = new Post($connection);
+
+// Fetch the posts
+$posts = $post->getAllPosts();
+
 
 ?>
 
@@ -73,38 +82,45 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
     <link rel="stylesheet" href="assets/css/responsive.css">
 
     <style>
-#autocompleteContainer {
-    position: absolute;
-    z-index: 1;
-    background-color: white;
-    max-height: 154px;
-    overflow-y: auto;
-    width: 100%; /* Adjust the width as needed */
-    border: 1px solid #ccc;
-    margin-top: -3px; /* Add some margin for spacing */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-   /* Add a slight shadow effect */
-}
+    #autocompleteContainer {
+        position: absolute;
+        z-index: 1;
+        background-color: white;
+        max-height: 154px;
+        overflow-y: auto;
+        width: 100%; /* Adjust the width as needed */
+        border: 1px solid #ccc;
+        margin-top: -3px; /* Add some margin for spacing */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    /* Add a slight shadow effect */
+    }
 
-.ui-autocomplete-category {
-    font-weight: bold;
-    padding: 5px 10px;
-    background-color: #f5f5f5; /* Light gray background color */
-    border-bottom: 1px solid #ccc; /* Bottom border */
-}
+    .ui-autocomplete-category {
+        font-weight: bold;
+        padding: 5px 10px;
+        background-color: #f5f5f5; /* Light gray background color */
+        border-bottom: 1px solid #ccc; /* Bottom border */
+    }
 
-.ui-autocomplete-item {
-    padding: 5px 10px;
-    cursor: pointer;
-    color: #3B0000;
-}
+    .ui-autocomplete-item {
+        padding: 5px 10px;
+        cursor: pointer;
+        color: #3B0000;
+    }
 
-.ui-autocomplete-item:last-child {
-    border-bottom: none; /* Remove bottom border for the last item */
-}
+    .ui-autocomplete-item:last-child {
+        border-bottom: none; /* Remove bottom border for the last item */
+    }
 
-
-        </style>
+    .description-container {
+        height: 3.6em; /* Set the height to accommodate 2 lines of text */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit the description to 2 lines */
+        -webkit-box-orient: vertical;
+    }
+            </style>
 </head>
 
 <body>
@@ -115,6 +131,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                     <div class="col-lg-11 col-md-10 col-sm-9 col-9">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index-4.html">
+                         <img style="width:180px;" src="assets/images/logo.png" alt="Logo">
+
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
@@ -254,7 +272,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <span><?php echo $author; ?></span>
                             </div>
                             <div class="button text-right">
-                                <a href="#" class="main-btn">Buy Now ($<?php echo $price; ?>)</a>
+                                <a href="book-detail.php?book_id=<?php echo $book['id']?>" class="main-btn">Buy Now ($<?php echo $price; ?>)</a>
                             </div>
                         </div>
                     </div>  
@@ -280,11 +298,12 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
+
             <div class="row">
                 <div class="col-lg-6">
                     <div class="singel-news mt-30">
                         <div class="news-thum pb-25">
-                            <img src="assets/images/news/n-1.jpg" alt="News">
+                            <img src="uploads/posts/n-1.jpg" alt="News">
                         </div>
                         <div class="news-cont">
                             <ul>
@@ -294,67 +313,46 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             <a href="blog-singel.html"><h3>ህፃናት ልያነቡት የሚገባ መፅሀፍት ዝርዝር</h3></a>
                             <p>ህፃናት የሚያነቡትን መርጠን ልንሰጣቸው ይገባል! በሚያነቡት ተረት ተረት፣ ግጥም እና ታሪክ መፅሀፎች ውስጥ ልጆቻችን ምን እየተማሩ ነው? ቆም ብለን እንጠይቅ...</p>
                         </div>
-                    </div> <!-- singel news -->
-                </div>
-                <div class="col-lg-6">
-                    <div class="singel-news news-list">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="news-thum mt-30">
-                                    <img src="assets/images/news/ns-1.jpg" alt="News">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="news-cont mt-30">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-calendar"></i>Jun 2023</a></li>
-                                        <li><a href="#"> <span>By</span> Etsub Hayelom/a></li>
-                                    </ul>
-                                    <a href="blog-singel.html"><h3>ማንበብ ሙሉ ሰው ያደርጋል!</h3></a>
-                                    <p>በየመሃሉ ማንበብ ሙሉ ሰው ያደርጋል በሚለው ኃይለ መልዕክት ሰውን ወደ ንባብ እንዲገባ ያደርጋሉ። ለመሆኑ ሙሉ ሰው ማለት ምን ማለት ነው?</p>
-                                </div>
-                            </div>
-                        </div> <!-- row -->
-                    </div> <!-- singel news -->
-                    <div class="singel-news news-list">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="news-thum mt-30">
-                                    <img src="assets/images/news/ns-2.jpg" alt="News">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="news-cont mt-30">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-calendar"></i>2 December 2018 </a></li>
-                                        <li><a href="#"> <span>By</span> Adam linn</a></li>
-                                    </ul>
-                                    <a href="blog-singel.html"><h3>Study makes you perfect</h3></a>
-                                    <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons  vel.</p>
-                                </div>
-                            </div>
-                        </div> <!-- row -->
-                    </div> <!-- singel news -->
-                    <div class="singel-news news-list">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="news-thum mt-30">
-                                    <img src="assets/images/news/ns-3.jpg" alt="News">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="news-cont mt-30">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-calendar"></i>2 December 2018 </a></li>
-                                        <li><a href="#"> <span>By</span> Hayleyesus Tadese</a></li>
-                                    </ul>
-                                    <a href="blog-singel.html"><h3>በኢትዮጵያ ያሉ ታርካዊ መፅፍት...</h3></a>
-                                    <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons  vel.</p>
-                                </div>
-                            </div>
-                        </div> 
                     </div>  
                 </div>
+
+
+                <div class="col-lg-6">
+                <?php
+                    // Loop through the posts and display them
+                    foreach ($posts as $post) {
+                        $postId = $post['id'];
+                        $title = $post['title'];
+                        $description = $post['description'];
+                        $author = $post['author'];
+                        $image = $post['image'];
+                        $date = $post['date'];
+
+                        // Display the first post normally
+                        echo '<div class="singel-news news-list">';
+                        echo '<div class="row">';
+                        echo '<div class="col-sm-4">';
+                        echo '<div class="news-thum mt-30">';
+                        echo '<img src="uploads/posts/' . $image . '" alt="News">';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '<div class="col-sm-8">';
+                        echo '<div class="news-cont mt-30">';
+                        echo '<ul>';
+                        echo '<li><a href="#"><i class="fa fa-calendar"></i>' . date("M Y", strtotime($date)) . '</a></li>';
+                        echo '<li><a href="#"> <span>By </span>' . $author . '</a></li>';
+                        echo '</ul>';
+                        echo '<a href="blog.php?blog_id=' . $postId . '"><h3>' . $title . '</h3></a>';
+                        echo '<div class="description-container">';
+                        echo '<p class="description">' . $description . '</p>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                    </div>
             </div>  
         </div>  
     </section>
@@ -368,7 +366,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
+                            <img style="width:180px;" src="assets/images/logo.png" alt="Logo">
+
                             </div>
                             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">
@@ -432,11 +431,11 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     </div>
                                 </li>
                             </ul>
-                        </div> <!-- footer address -->
+                        </div>  
                     </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
-        </div> <!-- footer top -->
+                </div>  
+            </div>  
+        </div>  
         
  
     </footer>

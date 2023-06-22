@@ -122,5 +122,11 @@ class User {
 
         return $totalBooksInCart;
     }
+
+    public function changeProfilePic($userId, $profilePic) {
+        // Update the user's profile picture
+        $query = "UPDATE user SET profile_pic = '$profilePic' WHERE id = $userId";
+        $this->connection->query($query);
+    }
 }
 ?>

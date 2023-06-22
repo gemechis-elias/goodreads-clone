@@ -2,6 +2,9 @@
 require_once 'user/user.php';
 require_once 'connection/connection.php';
 require_once 'books/book.php';
+require_once 'posts/post.php';
+require_once 'comments/comment.php';
+
 session_start();
 
 // Check if user is not logged in (session doesn't exist)
@@ -22,7 +25,37 @@ $userId = $user->getUserIdByEmail($email);
 // Get the Current User
 $current_user = $user->getUser($userId);
 $books = new Book($connection);
-$all_book = $books->getAllBooks();
+// Get All Book in Cart
+$totalBooksInCart = $user->getTotalBooksInCart($userId);
+
+
+$post = new Post($connection);
+$blogId = 0;
+// Get the blog_id parameter from the URL
+if (isset($_GET['blog_id'])) {
+    $blogId = $_GET['blog_id'];
+
+    // Get the single post based on the blog_id
+    $singlePost = $post->getSinglePost($blogId);
+
+    if ($singlePost) {
+        $title = $singlePost['title'];
+        $description = $singlePost['description'];
+        $author = $singlePost['author'];
+        $image = $singlePost['image'];
+        $date = $singlePost['date'];
+    } else {
+        // If the post is not found, display an error message or redirect to an error page
+        echo 'Post not found.';
+        exit;
+    }
+} else {
+    // If the blog_id parameter is not set, display an error message or redirect to an error page
+    echo 'Invalid blog ID.';
+    exit;
+}
+
+$comment = new Comment($connection);
 
 
 // Check if the shopping-cart or heart-o buttons are clicked
@@ -46,19 +79,25 @@ if (isset($_GET['action'])) {
 
 // Get All Book in Cart
 $totalBooksInCart = $user->getTotalBooksInCart($userId);
+// Post Comment 
+
+if (isset($_POST['post_comment'])) {
+    $commentText = $_POST['comment'];
+    $comment->addPostComment($blogId, $userId, $commentText);
+}
+
+ 
 ?>
 
 <!doctype html>
 <html lang="en">
-
 <head>
-   
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>Books List</title>
+    <title>Blog Detail</title>
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
     <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -71,49 +110,10 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
   
-    <style>
-            #autocompleteContainer {
-                position: absolute;
-                z-index: 1;
-                background-color: white;
-                max-height: 164px;
-                overflow-y: auto;
-                width: 100%; /* Adjust the width as needed */
-                border: 1px solid #ccc;
-                margin-top: -3px; /* Add some margin for spacing */
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-            /* Add a slight shadow effect */
-            }
-
-            .ui-autocomplete-category {
-                font-weight: bold;
-                padding: 5px 10px;
-                background-color: #f5f5f5; /* Light gray background color */
-                border-bottom: 1px solid #ccc; /* Bottom border */
-            }
-
-            .ui-autocomplete-item {
-                padding: 5px 10px;
-                cursor: pointer;
-                color: #3B0000;
-            }
-
-            .ui-autocomplete-item:last-child {
-                border-bottom: none; /* Remove bottom border for the last item */
-            }
-
-            .description-container {
-                height: 3.6em; /* Set the height to accommodate 2 lines of text */
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2; /* Limit the description to 2 lines */
-                -webkit-box-orient: vertical;
-            }
-    </style>
+  
 </head>
 
-<body>  
+<body>
 <header id="header-part">
  
  <div class="navigation">
@@ -137,10 +137,10 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                  <a  href="index.php">Home</a>
                              </li>
                              <li class="nav-item">
-                                 <a href="my_book.php">My Books</a>
+                                 <a class="active" href="my_book.php">My Books</a>
                              </li>
                              <li class="nav-item">
-                                 <a  class="active" href="browse_books.php">Browse</a>
+                                 <a href="browse_books.php">Browse</a>
                                  <ul class="sub-menu">
                                      <li><a href="browse_books.php">Recommendation</a></li>
                                      <li><a href="browse_books.php">Choice Awards</a></li>
@@ -179,91 +179,138 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
      </div>  
  </div>
 </header>
-
-</div>
-    <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="6" style="background-image: url(assets/images/page-banner-5.jpg)">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="page-banner-cont">
-                        <h2>Browse Books</h2>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Book Shelf</li>
-                            </ol>
-                        </nav>
-                    </div>  
-                </div>
-            </div> 
-        </div> 
-    </section>
-    
-    <section id="shop-page" class="pt-120 pb-120 gray-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 autocomplete-wrapper">
-                    <div class="saidbar">
-                        <div class="saidbar-search mt-30">
-                            <form>
-                                <input type="text" placeholder="Search" id="keywordInput">
-                                <button type="button"><i class="fa fa-search"></i></button>
-                            </form>
-                        </div> 
-                        <div id="autocompleteContainer"></div> 
+   
+<section id="blog-singel" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-details mt-30">
+                    <div class="thum">
+                        <img style="height:400px; width:100%;" src="uploads/posts/<?php echo $image; ?>" alt="Blog Details">
                     </div>
-               </div>
-            </div>  
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="shop-grid" role="tabpanel" aria-labelledby="shop-grid-tab">
-              <div class="row justify-content-center">
-                <?php
-                $limit = 4; // Limit the number of books to display
-                $counter = 0; // Counter to keep track of the number of displayed books
-                foreach ($all_book as $book) {
-                    // Check if the counter exceeds the limit
-                    if ($counter >= $limit) {
-                        break; // Exit the loop if the limit is reached
-                    }
+                    <div class="cont">
+                        <h3><?php echo $title; ?></h3>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-calendar"></i><?php echo date("d M Y", strtotime($date)); ?></a></li>
+                            <li><a href="#"><i class="fa fa-user"></i><?php echo $author; ?></a></li>
+                        </ul>
+                        <p><?php echo $description; ?></p>
 
-                    $imagePath = "uploads/" . $book['image']; // Assuming the image path is stored in the 'image' column
-                    $title = $book['title'];
-                    $author = $book['author'];
-                    $price = $book['price'];
-                    $bookId = $book['id'];
-                ?>
-                <div class="col-lg-3 col-md-6 col-sm-8">
-                    <div class="singel-publication mt-30">
-                        <div class="image">
-                            <img src="<?php echo $imagePath; ?>" alt="Publication">
-                            <div class="add-cart">
-                                <ul>
-                                    <li><a href="?action=add_to_cart&book_id=<?php echo $bookId; ?>"><i class="fa fa-shopping-cart"></i></a></li>
-                                    <li><a href="?action=add_to_my_books&book_id=<?php echo $bookId; ?>"><i class="fa fa-heart-o"></i></a></li>
-                                </ul>
+                        <div class="blog-comment pt-45">
+                            <div class="title pb-15">
+                                <h3>Comment</h3>
                             </div>
+                            <div class="reviews-cont">
+                                       
+                                        <ul>
+                                            <?php
+                                            $comments = $comment->displayPostComments($blogId);
+
+                                            foreach ($comments as $comment) {
+                                                $authorName = $comment['name'];
+                                                $profilePic = "uploads/".$comment['profile_pic'];
+                                                $commentText = $comment['comment'];
+                                            ?>
+                                            <li>
+                                                <div class="singel-reviews">
+                                                    <div class="reviews-author">
+                                                        <div class="author-thum">
+                                                            <img style="width:35px; height:40px;" src="<?php echo $profilePic; ?>" alt="Reviews">
+                                                        </div>
+                                                        <div class="author-name">
+                                                            <h6><?php echo $authorName; ?></h6>
+                                                            <span><?php echo $commentText; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </li>
+                                            <br>
+                                            <?php
+                                            }
+                                            ?>
+                                        </ul>
+
+                                        <div class="title pt-15">
+                                        <h6>Leave A Comment</h6>
+                                        </div>
+                                        <div class="reviews-form">
+                                            <form action="#" method="post">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-singel">
+                                                            <textarea name="comment" placeholder="Comment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-singel">
+                                                            <button type="submit" name="post_comment" class="main-btn">Post Comment</button>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </form>
+                                        </div>
+
+                                        </div> 
                         </div>
-                        <div class="cont">
-                            <div class="name">
-                                <a href="shop-singel.html"><h6><?php echo $title; ?></h6></a>
-                                <span><?php echo $author; ?></span>
-                            </div>
-                            <div class="button text-right">
-                                <a href="?book_id=<?php echo $book['id']?>" class="main-btn">Buy Now ($<?php echo $price; ?>)</a>
-                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="saidbar">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6">
+                            <div class="saidbar-post mt-30">
+                                <h4>Popular Posts</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <div class="singel-post">
+                                                <div class="thum">
+                                                    <img src="assets/images/blog/blog-post/bp-1.jpg" alt="Blog">
+                                                </div>
+                                                <div class="cont">
+                                                    <h6>Introduction to languages</h6>
+                                                    <span>20 Dec 2018</span>
+                                                </div>
+                                            </div>  
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="singel-post">
+                                                <div class="thum">
+                                                    <img src="assets/images/blog/blog-post/bp-2.jpg" alt="Blog">
+                                                </div>
+                                                <div class="cont">
+                                                    <h6>How to build a game with java</h6>
+                                                    <span>10 Dec 2018</span>
+                                                </div>
+                                            </div>  
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="singel-post">
+                                                <div class="thum">
+                                                    <img src="assets/images/blog/blog-post/bp-1.jpg" alt="Blog">
+                                                </div>
+                                                <div class="cont">
+                                                    <h6>Basic accounting from primary</h6>
+                                                    <span>07 Dec 2018</span>
+                                                </div>
+                                            </div>  
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>  
                         </div>
                     </div>  
-                </div>
-                <?php
-                    $counter++; 
-                }
-                ?>
+                </div>  
             </div>
-            </div>
-            </div> 
-        </div> 
-    </section>
-        <footer id="footer-part">
+        </div>  
+    </div> 
+</section>   
+    <footer id="footer-part">
         <div class="footer-top pt-40 pb-70">
             <div class="container">
                 <div class="row">
@@ -280,7 +327,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                             </ul>
-                        </div> 
+                        </div> <!-- footer about -->
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="footer-link mt-40">
@@ -297,7 +344,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <li><a href="shop.html"><i class="fa fa-angle-right"></i>Shop</a></li>
                                 <li><a href="teachers.html"><i class="fa fa-angle-right"></i>Teachers</a></li>
                             </ul>
-                        </div>  
+                        </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="footer-link support mt-40">
@@ -309,7 +356,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Privacy</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Policy</a></li>
                             </ul>
-                        </div>  
+                        </div> <!-- support -->
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-address mt-40">
@@ -335,12 +382,18 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     </div>
                                 </li>
                             </ul>
-                        </div>  
+                        </div> <!-- footer address -->
                     </div>
-                </div> 
-            </div> 
-        </div>  
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- footer top -->
+        
+ 
     </footer>
+    
+    
+    
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
@@ -354,67 +407,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
     <script src="assets/js/validator.min.js"></script>
     <script src="assets/js/ajax-contact.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
-    $(document).ready(function() {
-        // Get the category and keyword elements
-        var categorySelect = document.getElementById("categorySelect");
-        var keywordInput = document.getElementById("keywordInput");
-        var autocompleteContainer = document.getElementById("autocompleteContainer");
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
+    <script src="assets/js/map-script.js"></script>
 
-        // Attach the event listener to the keyword input
-        $(keywordInput).on('keyup', function() {
-            var category = categorySelect.value;
-            var keyword = this.value;
-
-            // Call the searchBooks function with a delay
-            setTimeout(function() {
-                searchBooks(category, keyword);
-            }, 300);
-        });
-
-        // Autocomplete widget
-        $(keywordInput).autocomplete({
-            source: function(request, response) {
-                var category = categorySelect.value;
-                var keyword = request.term;
-
-                $.ajax({
-                    url: "search-books.php",
-                    dataType: "json",
-                    data: { category: category, keyword: keyword },
-                    success: function(data) {
-                        response(data);
-                    }
-                });
-            },
-            minLength: 1,
-            select: function(event, ui) {
-                // Redirect to view-book.php with the selected book ID
-                var bookId = ui.item.value;
-                window.location.href = "view-book.php?id=" + bookId;
-            }
-        });
-    });
-
-    function searchBooks(category, keyword) {
-        if (keyword.length == 0) {
-            document.getElementById("autocompleteContainer").innerHTML = "";
-            return;
-        }
-
-        var xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("autocompleteContainer").innerHTML = this.responseText;
-            }
-        };
-
-        xmlhttp.open("GET", "search-books.php?category=" + category + "&keyword=" + keyword, true);
-        xmlhttp.send();
-    }
-
-    </script>
 </body>
-
 </html>

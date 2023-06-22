@@ -60,7 +60,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
              <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                  <nav class="navbar navbar-expand-lg">
                      <a class="navbar-brand" href="index-4.html">
-                         <img src="assets/images/logo.png" alt="Logo">
+                     <img style="width:180px;" src="assets/images/logo-2.png" alt="Logo">
+
                      </a>
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="icon-bar"></span>
@@ -210,7 +211,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
+                            <img style="width:180px;" src="assets/images/logo.png" alt="Logo">
+
                             </div>
                             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">

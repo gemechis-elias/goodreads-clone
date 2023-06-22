@@ -2,6 +2,9 @@
 require_once 'user/user.php';
 require_once 'connection/connection.php';
 require_once 'books/book.php';
+require_once 'posts/post.php';
+require_once 'comments/comment.php';
+
 session_start();
 
 // Check if user is not logged in (session doesn't exist)
@@ -26,7 +29,54 @@ $books = new Book($connection);
 $totalBooksInCart = $user->getTotalBooksInCart($userId);
 
 
-?><!doctype html>
+$bookId = 0;
+if (isset($_GET['book_id'])) {
+    $bookId = $_GET['book_id'];
+
+    $singleBook = $books->getSingleBook($bookId);
+
+    if ($singleBook) {
+        $title = $singleBook['title'];
+        $description = $singleBook['description'];
+        $author = $singleBook['author'];
+        $image = $singleBook['image'];
+        $date = $singleBook['date'];
+        $price = $singleBook['price'];
+    } else {
+        echo 'Book not found.';
+        exit;
+    }
+} else {
+    echo 'Invalid blook ID.';
+    exit;
+}
+
+
+// Check if the shopping-cart or heart-o buttons are clicked
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    $bookId = $_GET['book_id'];
+
+    // Perform the corresponding action based on the button clicked
+    switch ($action) {
+        case 'add_to_cart':
+            $user->addToCart($userId, $bookId);
+            // refresh the page
+            header("Location: index.php");
+            break;
+        case 'add_to_my_books':
+            $user->addToMyBooks($userId, $bookId);
+            header("Location: index.php");
+            break;
+    }
+}
+
+// Get All Book in Cart
+$totalBooksInCart = $user->getTotalBooksInCart($userId);
+ 
+?>
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -59,7 +109,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
              <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                  <nav class="navbar navbar-expand-lg">
                      <a class="navbar-brand" href="index-4.html">
-                         <img src="assets/images/logo.png" alt="Logo">
+                     <img style="width:150px;" src="assets/images/logo-2.png" alt="Logo">
+
                      </a>
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="icon-bar"></span>
@@ -115,249 +166,47 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
      </div>  
  </div>
 </header>
-
-<div class="search-box">
- <div class="serach-form">
-     <div class="closebtn">
-         <span></span>
-         <span></span>
-     </div>
-     <form action="#">
-         <input type="text" placeholder="Search by keyword">
-         <button><i class="fa fa-search"></i></button>
-     </form>
- </div> <!-- serach form -->
-</div>
-    
-    <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url(assets/images/page-banner-4.jpg)">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="page-banner-cont">
-                        <h2>Few tips for get better</h2>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Few tips for get better</li>
-                            </ol>
-                        </nav>
-                    </div>  <!-- page banner cont -->
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </section>
-    
-    <!--====== PAGE BANNER PART ENDS ======-->
    
-    <!--====== BLOG PART START ======-->
-    
-    <section id="blog-singel" class="pt-90 pb-120 gray-bg">
-        <div class="container">
-           <div class="row">
-              <div class="col-lg-8">
-                  <div class="blog-details mt-30">
-                      <div class="thum">
-                          <img src="assets/images/blog/b-1.jpg" alt="Blog Details">
-                      </div>
-                      <div class="cont">
-                          <h3>Few tips for get better results in examination</h3>
-                          <ul>
-                               <li><a href="#"><i class="fa fa-calendar"></i>25 Dec 2018</a></li>
-                               <li><a href="#"><i class="fa fa-user"></i>Mark anthem</a></li>
-                               <li><a href="#"><i class="fa fa-tags"></i>Education</a></li>
-                           </ul>
-                           <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .
-                           <br>
-                           <br>
-                           gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .
-                           <br>
-                           <br>
-                           gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .
-                           </p>
-                           <ul class="share">
-                               <li class="title">Share :</li>
-                               <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                               <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                               <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                               <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                               <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                           </ul>
-                           <div class="blog-comment pt-45">
-                               <div class="title pb-15">
-                                   <h3>Comment (3)</h3>
-                               </div>  <!-- title -->
-                               <ul>
-                                   <li>
-                                       <div class="comment">
-                                           <div class="comment-author">
-                                                <div class="author-thum">
-                                                    <img src="assets/images/review/r-1.jpg" alt="Reviews">
-                                                </div>
-                                                <div class="comment-name">
-                                                    <h6>Bobby Aktar</h6>
-                                                    <span>April 03, 2019</span>
-                                                </div>
-                                            </div>
-                                            <div class="comment-description pt-20">
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.</p>
-                                            </div>
-                                            <div class="comment-replay">
-                                                <a href="#">Reply</a>
-                                            </div>
-                                        </div> <!-- comment -->
-                                        <ul class="replay">
-                                           <li>
-                                               <div class="comment">
-                                                   <div class="comment-author">
-                                                        <div class="author-thum">
-                                                            <img src="assets/images/review/r-2.jpg" alt="Reviews">
-                                                        </div>
-                                                        <div class="comment-name">
-                                                            <h6>Humayun Ahmed</h6>
-                                                            <span>April 03, 2019</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="comment-description pt-20">
-                                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-                                                    </div>
-                                                    <div class="comment-replay">
-                                                        <a href="#">Reply</a>
-                                                    </div>
-                                                </div> <!-- comment -->
-                                           </li>
-                                       </ul>
-                                   </li>
-                                   <li>
-                                       <div class="comment">
-                                           <div class="comment-author">
-                                                <div class="author-thum">
-                                                    <img src="assets/images/review/r-3.jpg" alt="Reviews">
-                                                </div>
-                                                <div class="comment-name">
-                                                    <h6>Bobby Aktar</h6>
-                                                    <span>April 03, 2019</span>
-                                                </div>
-                                            </div>
-                                            <div class="comment-description pt-20">
-                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.</p>
-                                            </div>
-                                            <div class="comment-replay">
-                                                <a href="#">Reply</a>
-                                            </div>
-                                        </div> <!-- comment -->
-                                   </li>
-                               </ul>
-                               <div class="title pt-45 pb-25">
-                                   <h3>Leave a comment</h3>
-                               </div> <!-- title -->
-                               <div class="comment-form">
-                                   <form action="#">
-                                       <div class="row">
-                                           <div class="col-md-6">
-                                               <div class="form-singel">
-                                                   <input type="text" placeholder="Name">
-                                               </div> <!-- form singel -->
-                                           </div>
-                                           <div class="col-md-6">
-                                               <div class="form-singel">
-                                                   <input type="email" placeholder="email">
-                                               </div> <!-- form singel -->
-                                           </div>
-                                           <div class="col-md-12">
-                                               <div class="form-singel">
-                                                   <textarea placeholder="Comment"></textarea>
-                                               </div> <!-- form singel -->
-                                           </div>
-                                           <div class="col-md-12">
-                                               <div class="form-singel">
-                                                   <button class="main-btn">Submit</button>
-                                               </div> <!-- form singel -->
-                                           </div>
-                                       </div> <!-- row -->
-                                   </form>
-                               </div>  <!-- comment-form -->
-                           </div> <!-- blog comment -->
-                      </div> <!-- cont -->
-                  </div> <!-- blog details -->
-              </div>
-               <div class="col-lg-4">
-                   <div class="saidbar">
-                       <div class="row">
-                           <div class="col-lg-12 col-md-6">
-                               <div class="saidbar-search mt-30">
-                                   <form action="#">
-                                       <input type="text" placeholder="Search">
-                                       <button type="button"><i class="fa fa-search"></i></button>
-                                   </form>
-                               </div> <!-- saidbar search -->
-                               <div class="categories mt-30">
-                                   <h4>Categories</h4>
-                                   <ul>
-                                       <li><a href="#">Fronted</a></li>
-                                       <li><a href="#">Backend</a></li>
-                                       <li><a href="#">Photography</a></li>
-                                       <li><a href="#">Teachnology</a></li>
-                                       <li><a href="#">GMET</a></li>
-                                       <li><a href="#">Language</a></li>
-                                       <li><a href="#">Science</a></li>
-                                       <li><a href="#">Accounting</a></li>
+<section id="blog-singel" class="pt-90 pb-120 gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-details mt-30">
+                    <div class="thum">
+                        <img style="height:500px; width:100%;" src="uploads/<?php echo $image; ?>" alt="Blog Details">
+                    </div>
+                    <div class="cont">
+                        <h3><?php echo $title; ?></h3>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-calendar"></i><?php echo date("d M Y", strtotime($date)); ?></a></li>
+                            <li><a href="#"><i class="fa fa-user"></i><?php echo $author; ?></a></li>
+                        </ul>
+                        <p><?php echo $description; ?></p>
+
+                          </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="saidbar">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6">
+                            <div class="saidbar-post mt-30">
+                                <h4>Take action</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                           <button class="btn btn-primary" type="button" onclick="window.location.href='book-detail.php?action=add_to_cart&book_id=<?php echo $bookId; ?>'">Add to Cart</button>
+                                        </a>
+                                    </li>
                                    </ul>
-                               </div>
-                           </div> <!-- categories -->
-                           <div class="col-lg-12 col-md-6">
-                               <div class="saidbar-post mt-30">
-                                   <h4>Popular Posts</h4>
-                                   <ul>
-                                       <li>
-                                            <a href="#">
-                                                <div class="singel-post">
-                                                   <div class="thum">
-                                                       <img src="assets/images/blog/blog-post/bp-1.jpg" alt="Blog">
-                                                   </div>
-                                                   <div class="cont">
-                                                       <h6>Introduction to languages</h6>
-                                                       <span>20 Dec 2018</span>
-                                                   </div>
-                                               </div> <!-- singel post -->
-                                            </a>
-                                       </li>
-                                       <li>
-                                            <a href="#">
-                                                <div class="singel-post">
-                                                   <div class="thum">
-                                                       <img src="assets/images/blog/blog-post/bp-2.jpg" alt="Blog">
-                                                   </div>
-                                                   <div class="cont">
-                                                       <h6>How to build a game with java</h6>
-                                                       <span>10 Dec 2018</span>
-                                                   </div>
-                                               </div> <!-- singel post -->
-                                            </a>
-                                       </li>
-                                       <li>
-                                            <a href="#">
-                                                <div class="singel-post">
-                                                   <div class="thum">
-                                                       <img src="assets/images/blog/blog-post/bp-1.jpg" alt="Blog">
-                                                   </div>
-                                                   <div class="cont">
-                                                       <h6>Basic accounting from primary</h6>
-                                                       <span>07 Dec 2018</span>
-                                                   </div>
-                                               </div> <!-- singel post -->
-                                            </a>
-                                       </li>
-                                   </ul>
-                               </div> <!-- saidbar post -->
-                           </div>
-                       </div> <!-- row -->
-                   </div> <!-- saidbar -->
-               </div>
-           </div> <!-- row -->
-        </div> <!-- container -->
-    </section>
-    
+                            </div>  
+                        </div>
+                    </div>  
+                </div>  
+            </div>
+        </div>  
+    </div> 
+</section>   
     <footer id="footer-part">
         <div class="footer-top pt-40 pb-70">
             <div class="container">
@@ -365,7 +214,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
+                            <img style="width:150px;" src="assets/images/logo.png" alt="Logo">
+
                             </div>
                             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">
@@ -374,7 +224,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                             </ul>
-                        </div> <!-- footer about -->
+                        </div>  
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="footer-link mt-40">
@@ -391,7 +241,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <li><a href="shop.html"><i class="fa fa-angle-right"></i>Shop</a></li>
                                 <li><a href="teachers.html"><i class="fa fa-angle-right"></i>Teachers</a></li>
                             </ul>
-                        </div> <!-- footer link -->
+                        </div>  
                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="footer-link support mt-40">
@@ -403,7 +253,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Privacy</a></li>
                                 <li><a href="#"><i class="fa fa-angle-right"></i>Policy</a></li>
                             </ul>
-                        </div> <!-- support -->
+                        </div>  
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-address mt-40">
@@ -429,13 +279,11 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     </div>
                                 </li>
                             </ul>
-                        </div> <!-- footer address -->
+                        </div> 
                     </div>
-                </div> <!-- row -->
-            </div> <!-- container -->
-        </div> <!-- footer top -->
-        
- 
+                </div>  
+            </div> 
+        </div>  
     </footer>
     
     
@@ -454,8 +302,6 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
     <script src="assets/js/validator.min.js"></script>
     <script src="assets/js/ajax-contact.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="assets/js/map-script.js"></script>
 
 </body>
 </html>

@@ -1,7 +1,9 @@
 <?php
 require_once 'user/user.php';
 require_once 'connection/connection.php';
-require_once 'books/book.php';
+require_once 'books/book.php'; 
+require_once 'posts/post.php';
+
 session_start();
 
 // Check if user is not logged in (session doesn't exist)
@@ -47,9 +49,51 @@ if (isset($_GET['action'])) {
 // Get All Book in Cart
 $totalBooksInCart = $user->getTotalBooksInCart($userId);
 
+// Upload Post
+$post = new Post($connection);
+if (isset($_POST['post_comment'])) {
+ 
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $author = $current_user['name'];
+    $date = date("Y-m-d"); 
+    $post = new Post($connection);
+
+    $image = '';
+    if (!empty($_FILES['image']['name'])) {
+        $file = $_FILES['image'];
+        $fileName = $file['name'];
+        $fileSize = $file['size'];
+        $fileTmp = $file['tmp_name'];
+        $fileError = $file['error'];
+
+        // Check if the file is an image
+        $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
+        if (!in_array($fileExt, $allowedExtensions)) {
+            echo "Error: Only JPG, JPEG, PNG, and GIF files are allowed.";
+            exit;
+        }
+        $maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+        if ($fileSize > $maxFileSize) {
+            echo "Error: File size exceeds the maximum limit (5 MB).";
+            exit;
+        }
+
+        $newFileName = uniqid('', true) . '.' . $fileExt;
+        $uploadDir = 'uploads/posts/';
+
+        if (!move_uploaded_file($fileTmp, $uploadDir . $newFileName)) {
+            echo "Error: Failed to upload the file.";
+            exit;
+        }
+        $image = $newFileName;
+    }
+    $post = new Post($connection);
+    $post->addPost($title, $description, $author, $image, $date);
+
+}
 ?>
-
-
 <!doctype html>
 <html lang="en">
 
@@ -75,14 +119,18 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
 </head>
 
 <body>
+
+    
     <header id="header-part">
+ 
         <div class="navigation">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index-4.html">
-                                <img src="assets/images/logo.png" alt="Logo">
+                            <img style="width:180px;" src="assets/images/logo-2.png" alt="Logo">
+
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
@@ -91,59 +139,54 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             </button>
 
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul class="navbar-nav ml-auto">
+                            <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a href="index.php">Home</a>
+                                        <a  href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="active" href="my_book.php">My Books</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a   href="browse_books.php">Browse</a>
+                                        <a href="browse_books.php">Browse</a>
                                         <ul class="sub-menu">
                                             <li><a href="browse_books.php">Recommendation</a></li>
                                             <li><a href="browse_books.php">Choice Awards</a></li>
                                             <li><a href="browse_books.php">News and Interview</a></li>
-                                            <li><a href=" ">Explore </a></li>
+                                            <li><a href="">Explore </a></li>
 
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="community.html">Community</a>
+                                        <a href="community.php">Community</a>
                                        
                                     </li>
                                    
                                     <li class="nav-item">
-                                        <a href="shop.html">Cart</a>
+                                        <a href="cart.php">Cart</a>
                                         <ul class="sub-menu">
-                                            <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="shop-singel.html">Shop Singel</a></li>
+                                            <li><a href="cart.php">My Cart</a></li>
+                                            <li><a href="about.php">Wish List</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="contact.html">Group</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                            <li><a href="contact-2.html">Contact Us 2</a></li>
-                                        </ul>
+                                        <a href="logout.php">Logout</a>
                                     </li>
                                 </ul>
-                            </div>
+                             </div>
                         </nav>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-4">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-3">
                         <div class="right-icon text-right">
                             <ul>
-                                <li><a href="#" id="search"><i class="fa fa-search"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-bag"></i><span>0</span></a></li>
+                                <li><a href="#"><i class="fa fa-cart-plus"></i><span><?php echo $totalBooksInCart?></span></a></li>
                             </ul>
-                        </div> 
+                        </div>  
                     </div>
-                </div> 
-            </div> 
+                </div>  
+            </div>  
         </div>
-        
     </header>
+    
     <div class="search-box">
         <div class="serach-form">
             <div class="closebtn">
@@ -154,7 +197,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                 <input type="text" placeholder="Search by keyword">
                 <button><i class="fa fa-search"></i></button>
             </form>
-        </div> 
+        </div> <!-- serach form -->
     </div>
 
     
@@ -164,22 +207,19 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                 <div class="col-lg-4 col-md-8">
                     <div class="teachers-left mt-50">
                         <div class="hero">
-                            <img src="assets/images/teachers/no_profle.png" alt="Teachers">
+                            <img src="uploads/<?php echo $current_user['profile_pic'] ?>" alt="Teachers">
                         </div>
                         <div class="name">
                             <h6><?php echo $current_user['name']; ?></h6>
                             <span><?php echo $current_user['bio']; ?></span>
+                            <br>
+                            <br>
+                            <br>
+                            
                         </div>
-                        <div class="social">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
-                            </ul>
-                        </div>
+                       
                       
-                    </div> 
+                    </div> <!-- teachers left -->
                 </div>
                 <div class="col-lg-8">
                     <div class="teachers-right mt-50">
@@ -187,9 +227,13 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             <li class="nav-item">
                                 <a class="active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">Profile</a>
                             </li>
-                     
+                            
                             <li class="nav-item">
                                 <a id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">My Books</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a id="reviews-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="reviews" aria-selected="false">Create Post</a>
                             </li>
                         </ul>  
                         <div class="tab-content" id="myTabContent">
@@ -198,16 +242,16 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     <div class="singel-dashboard pt-40">
                                         <h5>About</h5>
                                         <p><?php echo $current_user['about']; ?></p>
-                                    </div>  
+                                    </div> <!-- singel dashboard -->
                                     <div class="singel-dashboard pt-40">
                                         <h5>GEMECHIS’S QUOTES</h5>
                                         <p><?php echo $current_user['qoutes']; ?></p>
-                                    </div>  
+                                    </div> <!-- singel dashboard -->
                                     <div class="singel-dashboard pt-40">
                                         <h5>FAVORITE GENRES</h5>
                                         <p>Christian<br>Novel<br>Science</p>
-                                    </div>  
-                                </div>  
+                                    </div> <!-- singel dashboard -->
+                                </div> <!-- dashboard cont -->
                             </div>
                       
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
@@ -244,7 +288,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                                     <p><?php echo $description; ?></p>
                                               
                                                 </div>
-                                            </div> 
+                                            </div>  
                                       
                                             <?php
                                                 }
@@ -253,12 +297,47 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     </ul>
                                    </div>  
                             </div>
+                            <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="reviews-tab">
+                                <div class="reviews-cont">
+                                    <div class="title">
+                                        <h6>Add New Posts</h6>
+                                    </div> 
+                                    <div class="reviews-form">
+                                        <form action="#" method="post" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <!-- Choose Image-->
+                                                    <div class="form-singel">
+                                                        <input type="file" name="image" placeholder="Choose Image">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-singel">
+                                                        <input type="text" name="title" placeholder="Title">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-singel">
+                                                        <textarea name="description" placeholder="Write a post..."></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-singel">
+                                                        <button type="submit" name="post_comment" class="main-btn">Upload Post</button>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </form>
+                                    </div> </div>
+                            </div>
                         </div>  
                     </div>  
                 </div>
             </div>  
         </div>  
     </section>
+
+
     <footer id="footer-part">
         <div class="footer-top pt-40 pb-70">
             <div class="container">
@@ -266,7 +345,8 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
+                            <img style="width:180px;" src="assets/images/logo.png" alt="Logo">
+
                             </div>
                             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">
@@ -330,31 +410,43 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> <!-- footer address -->
                     </div>
-                </div> 
-            </div> 
-        </div> 
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- footer top -->
         
  
     </footer>
+    
+    
 
     <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+
     <script src="assets/js/bootstrap.min.js"></script>
+    
     <script src="assets/js/slick.min.js"></script>
+    
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    
     <script src="assets/js/waypoints.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
+    
     <script src="assets/js/jquery.nice-select.min.js"></script>
+    
     <script src="assets/js/jquery.nice-number.min.js"></script>
+    
     <script src="assets/js/jquery.countdown.min.js"></script>
+    
     <script src="assets/js/validator.min.js"></script>
+    
     <script src="assets/js/ajax-contact.js"></script>
+    
     <script src="assets/js/main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3Ip9iVC0nIxC6V14CKLQ1HZNF_65qEQ"></script>
-    <script src="assets/js/map-script.js"></script>
 
 </body>
+
 </html>

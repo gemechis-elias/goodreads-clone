@@ -52,7 +52,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
 
 if (isset($_POST['post_comment'])) {
     $commentText = $_POST['comment'];
-    $comment->addComment($userId, $commentText);
+    $comment->addGroupComment($userId, $commentText);
 }
 
 ?>
@@ -91,7 +91,8 @@ if (isset($_POST['post_comment'])) {
              <div class="col-lg-10 col-md-10 col-sm-9 col-8">
                  <nav class="navbar navbar-expand-lg">
                      <a class="navbar-brand" href="index-4.html">
-                         <img src="assets/images/logo.png" alt="Logo">
+                     <img style="width:180px;" src="assets/images/logo-2.png" alt="Logo">
+
                      </a>
                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="icon-bar"></span>
@@ -148,19 +149,7 @@ if (isset($_POST['post_comment'])) {
  </div>
 </header>
 
-<div class="search-box">
- <div class="serach-form">
-     <div class="closebtn">
-         <span></span>
-         <span></span>
-     </div>
-     <form action="#">
-         <input type="text" placeholder="Search by keyword">
-         <button><i class="fa fa-search"></i></button>
-     </form>
- </div> <!-- serach form -->
-</div>
-
+ 
     
     <section id="teachers-singel" class="pt-70 pb-120 gray-bg">
         <div class="container">
@@ -200,7 +189,7 @@ if (isset($_POST['post_comment'])) {
                                         </div>
                                         <ul>
                                             <?php
-                                            $comments = $comment->displayComments();
+                                            $comments = $comment->displayGroupComments();
 
                                             foreach ($comments as $comment) {
                                                 $authorName = $comment['name'];
@@ -211,7 +200,7 @@ if (isset($_POST['post_comment'])) {
                                                 <div class="singel-reviews">
                                                     <div class="reviews-author">
                                                         <div class="author-thum">
-                                                            <img style="width:75px; height:80px;" src="<?php echo $profilePic; ?>" alt="Reviews">
+                                                            <img  style="width:35px; height:40px;" src="<?php echo $profilePic; ?>" alt="Reviews">
                                                         </div>
                                                         <div class="author-name">
                                                             <h6><?php echo $authorName; ?></h6>
@@ -226,7 +215,7 @@ if (isset($_POST['post_comment'])) {
                                         </ul>
 
                                         <div class="title pt-15">
-                                        <h6>Leave A Comment</h6>
+                                        <h6>Leave A Review</h6>
                                         </div>
                                         <div class="reviews-form">
                                             <form action="#" method="post">
@@ -252,7 +241,7 @@ if (isset($_POST['post_comment'])) {
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-singel">
-                                                            <button type="submit" name="post_comment" class="main-btn">Post Comment</button>
+                                                            <button type="submit" name="post_comment" class="main-btn">Post</button>
                                                         </div>
                                                     </div>
                                                 </div> 
@@ -274,7 +263,8 @@ if (isset($_POST['post_comment'])) {
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-about mt-40">
                             <div class="logo">
-                                <a href="#"><img src="assets/images/logo-2.png" alt="Logo"></a>
+                            <img style="width:180px;" src="assets/images/logo.png" alt="Logo">
+
                             </div>
                             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ማንበብ ሙሉ ሰው ያደርጋል!</p>
                             <ul class="mt-20">
