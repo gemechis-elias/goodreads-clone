@@ -181,7 +181,7 @@ $totalBooksInCart = $user->getTotalBooksInCart($userId);
                             <li><a href="#"><i class="fa fa-calendar"></i><?php echo date("d M Y", strtotime($date)); ?></a></li>
                             <li><a href="#"><i class="fa fa-user"></i><?php echo $author; ?></a></li>
                         </ul>
-                        <p><?php echo $description; ?></p>
+                        <p><?php echo $description;?></p>
 
                           </div>
                 </div>
