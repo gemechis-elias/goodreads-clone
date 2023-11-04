@@ -4,14 +4,6 @@
 
 This project is a clone of Goodreads.com, customized with an Ethiopian theme. It was developed as a class project for the Internet Programming II course. The website is implemented using pure PHP object-oriented programming and HTML, CSS, and JS.
 
-## Team Members
-
-- Gemechis Elias
-- Habteyesus Tadese
-- Duresa Fayisa
-- Etsubdink Hayelom
-- Firkresilase
-
 ## Features
 
 - User registration and login
